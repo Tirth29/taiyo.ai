@@ -20,26 +20,20 @@ const Charts: React.FC = () => {
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
   const [mapCountries, setMapCountries] = useState([]);
+  const [casesType, setCasesType] = useState("cases");
+  const [lineGraphCountry, setLineGraphCountry] = useState("Worldwild");
   const [mapCenter, setMapCenter] = useState({
     lat: 24,
     lng: 54,
   });
   const [mapZoom, setMapZoom] = useState(2);
-  const [casesType, setCasesType] = useState("cases");
-  const printCounts = (counts: any) => {
+  const printCounts = (counts: number | undefined) => {
     if (counts) {
       return `+${numeral(counts).format("0.0a")}`;
     } else {
       return "+0";
     }
   };
-  const [lineGraphCountry, setLineGraphCountry] = useState("Worldwild");
-
-  useEffect(() => {
-    fetch("https://disease.sh/v3/covid-19/all")
-      .then((response) => response.json())
-      .then((data) => setCountryInfo(data));
-  }, []);
 
   useEffect(() => {
     const getCountriesData = async () => {
@@ -47,7 +41,7 @@ const Charts: React.FC = () => {
         .then((response) => response.json())
         .then((data) => {
           const countryList = data.map(
-            (country: { country: any; countryInfo: { iso2: any } }) => ({
+            (country: { country: string; countryInfo: { iso2: string } }) => ({
               name: country.country,
               value: country.countryInfo.iso2,
             })
@@ -64,7 +58,7 @@ const Charts: React.FC = () => {
     getCountriesData();
   }, []);
 
-  const selectedCountry = async (event: { target: { value: any } }) => {
+  const selectedCountry = async (event: { target: { value: string } }) => {
     const currentCountry = event.target.value;
 
     if (currentCountry === "Worldwild") {
@@ -74,9 +68,9 @@ const Charts: React.FC = () => {
         .then((data) => {
           setSelectCountry(currentCountry);
           setCountryInfo(data);
-          setMapCenter([24, 54]);
+          // setMapCenter([24, 54]);
           setMapZoom(6);
-          setLineGraphCountry("Worldwild");
+          setLineGraphCountry({ casesType: "", country: "Worldwild" });
         });
     } else {
       const url = `https://disease.sh/v3/covid-19/countries/${currentCountry}`;
@@ -85,7 +79,10 @@ const Charts: React.FC = () => {
         .then((data) => {
           setSelectCountry(currentCountry);
           setCountryInfo(data);
-          setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+          setMapCenter({
+            lat: data.countryInfo.lat,
+            lng: data.countryInfo.long,
+          });
           setMapZoom(4);
           setLineGraphCountry(data.country);
         });
@@ -114,34 +111,36 @@ const Charts: React.FC = () => {
         <div className="app__states">
           <InfoBox
             isRed1
-            className=""
             active={casesType === "cases"}
             onClick={() => setCasesType("cases")}
             title="Coronovirus cases"
-            cases={printCounts(countryInfo.todayCases)}
-            total={printCounts(countryInfo.cases)}
+            cases={parseInt(printCounts(countryInfo.todayCases))}
+            total={parseInt(printCounts(countryInfo.cases))}
+            isRed={false}
           ></InfoBox>
           <InfoBox
             active={casesType === "recovered"}
             onClick={() => setCasesType("recovered")}
             title="Recovered"
-            cases={printCounts(countryInfo.todayRecovered)}
-            total={printCounts(countryInfo.recovered)}
+            cases={parseInt(printCounts(countryInfo.todayRecovered))}
+            total={parseInt(printCounts(countryInfo.recovered))}
+            isRed={false}
+            isRed1={false}
           ></InfoBox>
           <InfoBox
             isRed
             active={casesType === "deaths"}
             onClick={() => setCasesType("deaths")}
             title="Deaths"
-            cases={printCounts(countryInfo.todayDeaths)}
-            total={printCounts(countryInfo.deaths)}
+            cases={parseInt(printCounts(countryInfo.todayDeaths))}
+            total={parseInt(printCounts(countryInfo.deaths))}
+            isRed1={false}
           ></InfoBox>
         </div>
         <Map
-          className="app__left__map"
-          casesType={casesType}
+          casesType={casesType as "cases" | "recovered" | "deaths"}
           countries={mapCountries}
-          center={mapCenter}
+          center={[mapCenter.lat, mapCenter.lng]}
           zoom={mapZoom}
         ></Map>
       </div>
