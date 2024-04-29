@@ -1,0 +1,112 @@
+* {
+  margin: 0;
+}
+
+.app__covidImage {
+  width: 100%;
+  object-fit: contain;
+  max-width: 230px;
+}
+
+
+.app {
+  padding: 10px;
+  display: flex;
+  flex-direction: column; /* Change to column layout for mobile */
+}
+
+.app__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.app__states {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+body {
+  background-color: #f5f6fa;
+}
+
+/* Media query for screens up to 790px wide */
+@media (max-width: 790px) {
+  .app {
+    padding-bottom: 20px; /* Add bottom padding to the container */
+  }
+
+  .app__left,
+  .app__right {
+    width: 100%; /* Make left and right sections take full width */
+  }
+
+  .app__header {
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center elements vertically */
+  }
+
+  .app__states {
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center elements horizontally */
+  }
+
+  .app__states > * {
+    margin-bottom: 10px; /* Add some spacing between items */
+  }
+
+  .app__right__card {
+    margin-top: 20px; /* Add top margin to the card */
+  }
+}
+
+.app__left {
+  flex: 0.9;
+}
+
+.app__menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 100px solid lightgray;
+}
+
+.flag {
+  width: 100%;
+  object-fit: contain;
+  max-height: 30px;
+  max-width: 30px;
+}
+
+.graphTitle {
+  margin-bottom: 10px;
+}
+
+.app__right {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid lightgray;
+}
+
+.app__right__card {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.MuiCardContent-root {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.app__graph {
+  flex-grow: 1;
+  height: 400px;
+}
+
+.lingGraph {
+  flex-grow: 1;
+}
