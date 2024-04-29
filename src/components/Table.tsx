@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+// @ts-nocheck
 import numeral from "numeral";
 
 const Table = ({

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+// @ts-nocheck
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";

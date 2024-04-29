@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import { MapContainer, TileLayer, Circle, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";

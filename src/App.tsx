@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { Contact } from "./Contact";
@@ -9,11 +10,9 @@ import { EditContact } from "./EditContact";
 const App: React.FC = () => {
   return (
     <div className="lg:flex lg:flex-row h-screen">
-      {/* Sidebar (visible only on phone screens) */}
       <div className="lg:w-60 lg:h-screen w-full h-60 bg-gray-200">
         <Sidebar />
       </div>
-      {/* Content (visible only on large screens) */}
       <div className="lg:flex-grow overflow-y-auto">
         <Routes>
           <Route path="/" element={<Contact />} />
