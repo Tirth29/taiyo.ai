@@ -24,6 +24,8 @@ const NavItem: React.FC<{ to: string; exact?: boolean }> = ({
   const location = useLocation();
   const isActive = exact
     ? location.pathname === to
+    : to === "/charts"
+    ? location.pathname === to
     : location.pathname.startsWith(to);
 
   return (
