@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useEffect } from "react";
 import CovidImage from "./images/image.png";
 import FormControl from "@mui/material/FormControl";
@@ -9,7 +10,7 @@ import "./App.css";
 
 import "leaflet/dist/leaflet.css";
 import numeral from "numeral";
-import InfoBox from "./components/InfoBox";
+import InfoBox from "./components/InfoBox.tsx";
 import Map from "./components/Map";
 import Table from "./components/Table";
 import LineGraph from "./components/LineGraph";
@@ -20,20 +21,26 @@ const Charts: React.FC = () => {
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
   const [mapCountries, setMapCountries] = useState([]);
-  const [casesType, setCasesType] = useState("cases");
-  const [lineGraphCountry, setLineGraphCountry] = useState("Worldwild");
   const [mapCenter, setMapCenter] = useState({
     lat: 24,
     lng: 54,
   });
   const [mapZoom, setMapZoom] = useState(2);
-  const printCounts = (counts: number | undefined) => {
+  const [casesType, setCasesType] = useState("cases");
+  const printCounts = (counts: any) => {
     if (counts) {
       return `+${numeral(counts).format("0.0a")}`;
     } else {
       return "+0";
     }
   };
+  const [lineGraphCountry, setLineGraphCountry] = useState("Worldwild");
+
+  useEffect(() => {
+    fetch("https://disease.sh/v3/covid-19/all")
+      .then((response) => response.json())
+      .then((data) => setCountryInfo(data));
+  }, []);
 
   useEffect(() => {
     const getCountriesData = async () => {
@@ -41,7 +48,7 @@ const Charts: React.FC = () => {
         .then((response) => response.json())
         .then((data) => {
           const countryList = data.map(
-            (country: { country: string; countryInfo: { iso2: string } }) => ({
+            (country: { country: any; countryInfo: { iso2: any } }) => ({
               name: country.country,
               value: country.countryInfo.iso2,
             })
@@ -70,7 +77,7 @@ const Charts: React.FC = () => {
           setCountryInfo(data);
           // setMapCenter([24, 54]);
           setMapZoom(6);
-          setLineGraphCountry({ casesType: "", country: "Worldwild" });
+          setLineGraphCountry("Worldwild");
         });
     } else {
       const url = `https://disease.sh/v3/covid-19/countries/${currentCountry}`;
@@ -111,36 +118,34 @@ const Charts: React.FC = () => {
         <div className="app__states">
           <InfoBox
             isRed1
+            className=""
             active={casesType === "cases"}
             onClick={() => setCasesType("cases")}
             title="Coronovirus cases"
             cases={parseInt(printCounts(countryInfo.todayCases))}
-            total={parseInt(printCounts(countryInfo.cases))}
-            isRed={false}
+            total={printCounts(countryInfo.cases)}
           ></InfoBox>
           <InfoBox
             active={casesType === "recovered"}
             onClick={() => setCasesType("recovered")}
             title="Recovered"
-            cases={parseInt(printCounts(countryInfo.todayRecovered))}
-            total={parseInt(printCounts(countryInfo.recovered))}
-            isRed={false}
-            isRed1={false}
+            cases={printCounts(countryInfo.todayRecovered)}
+            total={printCounts(countryInfo.recovered)}
           ></InfoBox>
           <InfoBox
             isRed
             active={casesType === "deaths"}
             onClick={() => setCasesType("deaths")}
             title="Deaths"
-            cases={parseInt(printCounts(countryInfo.todayDeaths))}
-            total={parseInt(printCounts(countryInfo.deaths))}
-            isRed1={false}
+            cases={printCounts(countryInfo.todayDeaths)}
+            total={printCounts(countryInfo.deaths)}
           ></InfoBox>
         </div>
         <Map
-          casesType={casesType as "cases" | "recovered" | "deaths"}
+          className="app__left__map"
+          casesType={casesType}
           countries={mapCountries}
-          center={[mapCenter.lat, mapCenter.lng]}
+          center={mapCenter}
           zoom={mapZoom}
         ></Map>
       </div>
