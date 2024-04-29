@@ -116,14 +116,14 @@ const Charts: React.FC = () => {
             isRed1
             className=""
             active={casesType === "cases"}
-            onClick={(e: any) => setCasesType("cases")}
+            onClick={() => setCasesType("cases")}
             title="Coronovirus cases"
             cases={printCounts(countryInfo.todayCases)}
             total={printCounts(countryInfo.cases)}
           ></InfoBox>
           <InfoBox
             active={casesType === "recovered"}
-            onClick={(e: any) => setCasesType("recovered")}
+            onClick={() => setCasesType("recovered")}
             title="Recovered"
             cases={printCounts(countryInfo.todayRecovered)}
             total={printCounts(countryInfo.recovered)}
@@ -131,7 +131,7 @@ const Charts: React.FC = () => {
           <InfoBox
             isRed
             active={casesType === "deaths"}
-            onClick={(e: any) => setCasesType("deaths")}
+            onClick={() => setCasesType("deaths")}
             title="Deaths"
             cases={printCounts(countryInfo.todayDeaths)}
             total={printCounts(countryInfo.deaths)}

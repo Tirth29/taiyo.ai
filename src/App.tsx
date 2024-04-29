@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Routes, Route, Switch } from "react-router-dom";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import { Contact } from "./Contact";
 import Sidebar from "./Sidebar";
 import Charts from "./Charts";
