@@ -20,7 +20,7 @@ export const EditContact = ({ contact }: { contact: object }) => {
       setFormData(contact);
     } else {
       const existingContacts = JSON.parse(
-        localStorage.getItem("https://taiyo-ai-77.vercel.app") || "[]"
+        localStorage.getItem("contacts") || "[]"
       );
       contact = existingContacts.find((contact: any) => contact.id === id);
     }
@@ -37,7 +37,7 @@ export const EditContact = ({ contact }: { contact: object }) => {
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const existingContacts = JSON.parse(
-      localStorage.getItem("https://taiyo-ai-77.vercel.app") || "[]"
+      localStorage.getItem("contacts") || "[]"
     );
     const updatedContacts = existingContacts.map((existingContact: any) => {
       if (existingContact.id === id) {
