@@ -42,7 +42,6 @@ export const CreateContact = () => {
       status: formData.status,
     };
     const updatedContacts = [...existingContacts, newContact];
-    console.log(updatedContacts);
     localStorage.setItem("contacts", JSON.stringify(updatedContacts));
     toast.success("New contact added successfully!", {
       autoClose: 1000,

@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
+// update localStorage.getItem as "contact" while running on local machine
+
 export const EditContact = ({ contact }: { contact: object }) => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -18,7 +20,7 @@ export const EditContact = ({ contact }: { contact: object }) => {
       setFormData(contact);
     } else {
       const existingContacts = JSON.parse(
-        localStorage.getItem("contacts") || "[]"
+        localStorage.getItem("https://taiyo-ai-77.vercel.app") || "[]"
       );
       contact = existingContacts.find((contact: any) => contact.id === id);
     }
@@ -35,7 +37,7 @@ export const EditContact = ({ contact }: { contact: object }) => {
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const existingContacts = JSON.parse(
-      localStorage.getItem("contacts") || "[]"
+      localStorage.getItem("https://taiyo-ai-77.vercel.app") || "[]"
     );
     const updatedContacts = existingContacts.map((existingContact: any) => {
       if (existingContact.id === id) {
