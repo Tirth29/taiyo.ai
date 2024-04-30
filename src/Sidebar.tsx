@@ -22,11 +22,14 @@ const NavItem: React.FC<{ to: string; exact?: boolean }> = ({
   exact,
 }) => {
   const location = useLocation();
-  const isActive = exact
-    ? location.pathname === to
-    : to === "/charts"
-    ? location.pathname === to
-    : location.pathname.startsWith(to);
+
+  const isContactActive =
+    location.pathname === "/" ||
+    location.pathname.startsWith("/edit") ||
+    location.pathname === "/create";
+
+  const isChartsActive = location.pathname.startsWith("/charts");
+  const isActive = to === "/" ? isContactActive : isChartsActive;
 
   return (
     <div className={`relative ${isActive ? "bg-gray-600" : ""} rounded-lg m-3`}>
